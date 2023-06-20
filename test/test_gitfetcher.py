@@ -81,4 +81,4 @@ class TestGitFetcher(unittest.TestCase):
             "oe:0", "--group", "oe:0", "--mtime",
             "Tue, 20 Jun 2023 11:22:33 +0000", "."
         ],
-                                          cwd=workdir)
+                                          cwd=os.path.join(workdir, "proj-x"))

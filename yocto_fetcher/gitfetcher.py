@@ -54,7 +54,8 @@ class GitFetcher:
             "--group", "oe:0", "--mtime",
             self.__query_mtime(), "."
         ],
-                              cwd=self.workdir)
+                              cwd=os.path.join(self.workdir,
+                                               self.project_name))
 
     def __query_mtime(self):
         return subprocess.check_output(
