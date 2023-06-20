@@ -1,0 +1,22 @@
+[project]
+name = "yocto-fetcher"
+authors = [{name = "jhnc-oss"}]
+description = "Fetches Yocto Bitbake compatible source tarballs"
+license = {file = "LICENSE"}
+readme = "README.md"
+requires-python = ">= 3.8"
+keywords = ["yocto", "bitbake", "fetcher"]
+
+
+[project.optional-dependencies]
+dev = [
+    "pylint == 2.17.4",
+    "pytest == 7.3.2",
+    "yapf == 0.40.0"
+]
+
+[tool.yapf]
+based_on_style = "pep8"
+spaces_before_comment = 4
+split_before_logical_operator = true
+column_limit = 79
