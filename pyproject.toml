@@ -1,12 +1,15 @@
 [project]
 name = "yocto-fetcher"
+dynamic = ["version"]
 authors = [{name = "jhnc-oss"}]
 description = "Fetches Yocto Bitbake compatible source tarballs"
 license = {file = "LICENSE"}
 readme = "README.md"
 requires-python = ">= 3.8"
-keywords = ["yocto", "bitbake", "fetcher"]
+keywords = ["yocto", "yocto-tools", "bitbake", "fetcher"]
 
+[project.urls]
+"Homepage" = "https://github.com/jhnc-oss/yocto-fetcher"
 
 [project.optional-dependencies]
 dev = [
@@ -14,6 +17,15 @@ dev = [
     "pytest == 7.3.2",
     "yapf == 0.40.0"
 ]
+
+[build-system]
+requires = ["setuptools"]
+
+[tool.setuptools.dynamic]
+version = {attr = "yocto_fetcher.version.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["yocto_fetcher"]
 
 [tool.yapf]
 based_on_style = "pep8"

@@ -20,35 +20,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import argparse
-import os
-import tempfile
-
-from yocto_fetcher.gitfetcher import GitFetcher
-from yocto_fetcher.version import __version__
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        prog="yocto-fetcher",
-        description="Create Yocto Bitbake compatible source tarballs")
-    parser.add_argument('--version',
-                        '-v',
-                        action='version',
-                        version=f"%(prog)s {__version__}",
-                        help='Shows the program version')
-    parser.add_argument("source")
-    return parser.parse_args()
-
-
-def main():
-    args = parse_args()
-
-    with tempfile.TemporaryDirectory(prefix="yoctofetcher") as temp_dir:
-        fetcher = GitFetcher(args.source, temp_dir)
-        fetcher.fetch()
-        fetcher.pack(os.getcwd())
-
-
-if __name__ == '__main__':
-    main()
+__version__ = "0.2.1.dev0"
