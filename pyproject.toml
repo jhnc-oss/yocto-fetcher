@@ -23,7 +23,7 @@ yoctofetcher = "yocto_fetcher.__main__:main"
 
 [project.optional-dependencies]
 dev = [
-    "pylint == 3.0.1",
+    "pylint == 3.0.2",
     "pytest == 7.4.2",
     "yapf == 0.40.2"
 ]
