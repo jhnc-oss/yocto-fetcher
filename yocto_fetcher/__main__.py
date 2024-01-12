@@ -31,12 +31,15 @@ from yocto_fetcher.version import __version__
 def parse_args():
     parser = argparse.ArgumentParser(
         prog="yocto-fetcher",
-        description="Create Yocto Bitbake compatible source tarballs")
-    parser.add_argument('--version',
-                        '-v',
-                        action='version',
-                        version=f"%(prog)s {__version__}",
-                        help='Shows the program version')
+        description="Create Yocto Bitbake compatible source tarballs",
+    )
+    parser.add_argument(
+        "--version",
+        "-v",
+        action="version",
+        version=f"%(prog)s {__version__}",
+        help="Shows the program version",
+    )
     parser.add_argument("source")
     return parser.parse_args()
 
@@ -50,5 +53,5 @@ def main():
         fetcher.pack(os.getcwd())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
