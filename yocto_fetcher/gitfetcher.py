@@ -26,7 +26,6 @@ from urllib.parse import urlparse
 
 
 class GitFetcher:
-
     def __init__(self, repo_url, workdir):
         self.repo_url = repo_url
         self.workdir = workdir
@@ -36,28 +35,39 @@ class GitFetcher:
         if not self.project_name:
             raise ValueError(f"Invalid url: {repo_url}")
 
-        path_escaped = url.path.replace("/", ".").replace("*", ".").replace(
-            ":", ".").replace(" ", "_")
+        path_escaped = (
+            url.path.replace("/", ".")
+            .replace("*", ".")
+            .replace(":", ".")
+            .replace(" ", "_")
+        )
         self.dest_filename = f"git2_{url.netloc}{path_escaped}.tar.gz"
 
     def fetch(self):
-        subprocess.check_call([
-            "git", "clone", "--bare", "--mirror", self.repo_url,
-            self.project_name
-        ],
-                              cwd=self.workdir)
+        subprocess.check_call(
+            ["git", "clone", "--bare", "--mirror", self.repo_url, self.project_name],
+            cwd=self.workdir,
+        )
 
     def pack(self, dest_dir):
-        subprocess.check_call([
-            "tar", "-czf",
-            os.path.join(dest_dir, self.dest_filename), "--owner", "oe:0",
-            "--group", "oe:0", "--mtime",
-            self.__query_mtime(), "."
-        ],
-                              cwd=os.path.join(self.workdir,
-                                               self.project_name))
+        subprocess.check_call(
+            [
+                "tar",
+                "-czf",
+                os.path.join(dest_dir, self.dest_filename),
+                "--owner",
+                "oe:0",
+                "--group",
+                "oe:0",
+                "--mtime",
+                self.__query_mtime(),
+                ".",
+            ],
+            cwd=os.path.join(self.workdir, self.project_name),
+        )
 
     def __query_mtime(self):
         return subprocess.check_output(
             ["git", "log", "--all", "-1", "--format=%cD"],
-            cwd=os.path.join(self.workdir, self.project_name))
+            cwd=os.path.join(self.workdir, self.project_name),
+        )
