@@ -40,7 +40,7 @@ def parse_args():
         version=f"%(prog)s {__version__}",
         help="Shows the program version",
     )
-    parser.add_argument("source")
+    parser.add_argument("source", help="Upstream source repository URL")
     return parser.parse_args()
 
 
