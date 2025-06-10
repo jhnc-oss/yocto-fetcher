@@ -31,7 +31,7 @@ pip install git+https://github.com/jhnc-oss/yocto-fetcher.git
 # pipx
 pipx install git+https://github.com/jhnc-oss/yocto-fetcher.git
 ```
-Append `@<Tag>` to install a specifc release (ie. `…/yocto-fetcher.git@v0.0.8`).
+Append `@<Tag>` to install a specific [release](https://github.com/jhnc-oss/yocto-fetcher/releases) (ie. `…/yocto-fetcher.git@v0.0.8`).
 
 **Local installation:**
 
