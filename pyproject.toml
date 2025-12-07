@@ -15,6 +15,12 @@ classifiers = [
     "Topic :: Utilities",
 ]
 
+[tool.pyrefly]
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/jhnc-oss/yocto-fetcher"
 
@@ -25,7 +31,8 @@ yoctofetcher = "yocto_fetcher.__main__:main"
 dev = [
     "pylint == 3.3.9",
     "pytest == 8.4.2",
-    "ruff == 0.14.7"
+    "ruff == 0.14.7",
+    "pyrefly==0.44.2"
 ]
 
 [build-system]

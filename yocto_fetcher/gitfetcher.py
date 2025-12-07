@@ -26,7 +26,7 @@ from urllib.parse import urlparse
 
 
 class GitFetcher:
-    def __init__(self, repo_url, workdir):
+    def __init__(self, repo_url: str, workdir: str) -> None:
         self.repo_url = repo_url
         self.workdir = workdir
         url = urlparse(repo_url)
@@ -43,13 +43,13 @@ class GitFetcher:
         )
         self.dest_filename = f"git2_{url.netloc}{path_escaped}.tar.gz"
 
-    def fetch(self):
+    def fetch(self) -> None:
         subprocess.check_call(
             ["git", "clone", "--bare", "--mirror", self.repo_url, self.project_name],
             cwd=self.workdir,
         )
 
-    def pack(self, dest_dir):
+    def pack(self, dest_dir) -> None:
         subprocess.check_call(
             [
                 "tar",
@@ -66,8 +66,10 @@ class GitFetcher:
             cwd=os.path.join(self.workdir, self.project_name),
         )
 
-    def __query_mtime(self):
-        return subprocess.check_output(
-            ["git", "log", "--all", "-1", "--format=%cD"],
-            cwd=os.path.join(self.workdir, self.project_name),
+    def __query_mtime(self) -> str:
+        return str(
+            subprocess.check_output(
+                ["git", "log", "--all", "-1", "--format=%cD"],
+                cwd=os.path.join(self.workdir, self.project_name),
+            )
         )

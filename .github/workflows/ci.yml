@@ -29,6 +29,8 @@ jobs:
         run: pylint yocto_fetcher test
       - name: Lint (ruff)
         run: ruff check --output-format=github .
+      - name: Lint (pyrefly)
+        run: pyrefly check
 
   formatting:
     name: formatting
