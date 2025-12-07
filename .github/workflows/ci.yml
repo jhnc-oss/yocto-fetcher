@@ -20,12 +20,12 @@ jobs:
         uses: actions/setup-python@main
         with:
           python-version: ${{ matrix.python }}
-          cache: 'pip'
+          cache: "pip"
       - name: Install Dependencies
         run: pip install ".[dev]"
       - name: Test
         run: pytest
-      - name: Lint
+      - name: Lint (pylint)
         run: pylint yocto_fetcher test
       - name: Lint (ruff)
         run: ruff check --output-format=github .
@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-python@main
         with:
           python-version: "3.13"
-          cache: 'pip'
+          cache: "pip"
       - name: Setup
         run: pip install ".[dev]"
       - name: Check Formatting
