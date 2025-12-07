@@ -28,7 +28,7 @@ from yocto_fetcher.gitfetcher import GitFetcher
 from yocto_fetcher.version import __version__
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="yocto-fetcher",
         description="Create Yocto Bitbake compatible source tarballs",
@@ -44,7 +44,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
 
     with tempfile.TemporaryDirectory(prefix="yoctofetcher") as temp_dir:

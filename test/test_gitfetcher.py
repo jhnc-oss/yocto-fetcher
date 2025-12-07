@@ -28,7 +28,7 @@ from yocto_fetcher.gitfetcher import GitFetcher
 
 
 class TestGitFetcher(unittest.TestCase):
-    def test_project_name_is_split_from_url(self):
+    def test_project_name_is_split_from_url(self) -> None:
         self.assertEqual(
             "projA",
             GitFetcher("https://gitrepo.com/ab/projA", MagicMock()).project_name,
@@ -38,11 +38,11 @@ class TestGitFetcher(unittest.TestCase):
             GitFetcher("https://gitrepo.com/ab/projB", MagicMock()).project_name,
         )
 
-    def test_project_name_throws_if_no_match_found(self):
+    def test_project_name_throws_if_no_match_found(self) -> None:
         with self.assertRaises(ValueError):
             GitFetcher("https://gitrepo.url_ab", MagicMock())
 
-    def test_dest_file_name(self):
+    def test_dest_file_name(self) -> None:
         self.assertEqual(
             "git2_gitrepo.org.xyz.proj0.git.tar.gz",
             GitFetcher("https://gitrepo.org/xyz/proj0.git", MagicMock()).dest_filename,
@@ -55,7 +55,7 @@ class TestGitFetcher(unittest.TestCase):
         )
 
     @patch("subprocess.check_call", autospec=True)
-    def test_fetch_clones_to_path(self, mock_call):
+    def test_fetch_clones_to_path(self, mock_call) -> None:
         workdir = MagicMock()
         fetcher = GitFetcher("https://x.y/a/bc", workdir)
         fetcher.fetch()
@@ -70,7 +70,7 @@ class TestGitFetcher(unittest.TestCase):
         autospec=True,
         return_value="Tue, 20 Jun 2023 11:22:33 +0000",
     )
-    def test_pack_creates_targz(self, mock_mtime, mock_call):
+    def test_pack_creates_targz(self, mock_mtime, mock_call) -> None:
         workdir = MagicMock()
         fetcher = GitFetcher("https://x.y/a/proj-x", workdir)
 
