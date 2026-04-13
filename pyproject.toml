@@ -31,7 +31,7 @@ yoctofetcher = "yocto_fetcher.__main__:main"
 dev = [
     "pylint == 3.3.9",
     "pytest == 8.4.2",
-    "ruff == 0.15.9",
+    "ruff == 0.15.10",
     "pyrefly==0.59.1"
 ]
 
