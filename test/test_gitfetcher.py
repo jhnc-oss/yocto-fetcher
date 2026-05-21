@@ -68,7 +68,7 @@ class TestGitFetcher(unittest.TestCase):
     @patch(
         "subprocess.check_output",
         autospec=True,
-        return_value="Tue, 20 Jun 2023 11:22:33 +0000",
+        return_value=b"Tue, 20 Jun 2023 11:22:33 +0000\n",
     )
     def test_pack_creates_targz(self, mock_mtime, mock_call) -> None:
         workdir = MagicMock()
