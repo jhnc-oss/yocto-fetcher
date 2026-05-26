@@ -67,9 +67,11 @@ class GitFetcher:
         )
 
     def __query_mtime(self) -> str:
-        return str(
+        return (
             subprocess.check_output(
                 ["git", "log", "--all", "-1", "--format=%cD"],
                 cwd=os.path.join(self.workdir, self.project_name),
             )
+            .decode("utf-8")
+            .strip()
         )
