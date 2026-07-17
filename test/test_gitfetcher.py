@@ -96,3 +96,22 @@ class TestGitFetcher(unittest.TestCase):
             ],
             cwd=os.path.join(workdir, "proj-x"),
         )
+
+    @patch("subprocess.check_call", autospec=True)
+    def test_protocol_mapping(self, mock_call) -> None:
+        cases = [
+            ("git://aa.bb/cc", "https://aa.bb/cc", "cc"),
+            ("gitsm://x.y/z", "https://x.y/z", "z"),
+        ]
+
+        for input_url, expected_url, expected_dir in cases:
+            with self.subTest(url=input_url):
+                mock_call.reset_mock()
+                workdir = MagicMock()
+                fetcher = GitFetcher(input_url, workdir)
+                fetcher.fetch()
+
+                mock_call.assert_called_once_with(
+                    ["git", "clone", "--bare", "--mirror", expected_url, expected_dir],
+                    cwd=workdir,
+                )

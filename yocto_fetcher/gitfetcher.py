@@ -21,13 +21,14 @@
 # SOFTWARE.
 
 import os
+import re
 import subprocess
 from urllib.parse import urlparse
 
 
 class GitFetcher:
     def __init__(self, repo_url: str, workdir: str) -> None:
-        self.repo_url = repo_url
+        self.repo_url = self.__map_protocols(repo_url)
         self.workdir = workdir
         url = urlparse(repo_url)
         self.project_name = os.path.basename(url.path)
@@ -75,3 +76,6 @@ class GitFetcher:
             .decode("utf-8")
             .strip()
         )
+
+    def __map_protocols(self, input_url) -> str:
+        return re.sub(r"^(git|gitsm)://", "https://", input_url)
