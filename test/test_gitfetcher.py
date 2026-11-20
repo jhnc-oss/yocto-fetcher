@@ -42,10 +42,28 @@ class TestGitFetcher(unittest.TestCase):
         with self.assertRaises(ValueError):
             GitFetcher("https://gitrepo.url_ab", MagicMock())
 
+    def test_project_name_ignores_trailing_slash(self) -> None:
+        self.assertEqual(
+            "projA",
+            GitFetcher("https://gitrepo.com/ab/projA/", MagicMock()).project_name,
+        )
+        self.assertEqual(
+            "projA",
+            GitFetcher("https://gitrepo.com/ab/projA///", MagicMock()).project_name,
+        )
+
+    def test_root_only_url_still_throws(self) -> None:
+        with self.assertRaises(ValueError):
+            GitFetcher("https://gitrepo.com/", MagicMock())
+
     def test_dest_file_name(self) -> None:
         self.assertEqual(
             "git2_gitrepo.org.xyz.proj0.git.tar.gz",
             GitFetcher("https://gitrepo.org/xyz/proj0.git", MagicMock()).dest_filename,
+        )
+        self.assertEqual(
+            "git2_gitrepo.org.xyz.proj0.git.tar.gz",
+            GitFetcher("https://gitrepo.org/xyz/proj0.git/", MagicMock()).dest_filename,
         )
         self.assertEqual(
             "git2_gitrepo.org.x.y_z.p_r.o.j.0.git.tar.gz",

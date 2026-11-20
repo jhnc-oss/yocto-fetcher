@@ -31,13 +31,14 @@ class GitFetcher:
         self.repo_url = self.__map_protocols(repo_url)
         self.workdir = workdir
         url = urlparse(repo_url)
-        self.project_name = os.path.basename(url.path)
+        url_path = url.path.rstrip("/")
+        self.project_name = os.path.basename(url_path)
 
         if not self.project_name:
             raise ValueError(f"Invalid url: {repo_url}")
 
         path_escaped = (
-            url.path.replace("/", ".")
+            url_path.replace("/", ".")
             .replace("*", ".")
             .replace(":", ".")
             .replace(" ", "_")
