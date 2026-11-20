@@ -21,6 +21,10 @@ project-includes = [
     "**/*.ipynb",
 ]
 
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
 [project.urls]
 "Homepage" = "https://github.com/jhnc-oss/yocto-fetcher"
 
