@@ -30,7 +30,7 @@ from yocto_fetcher.version import __version__
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        prog="yocto-fetcher",
+        prog="yoctofetcher",
         description="Create Yocto Bitbake compatible source tarballs",
     )
     parser.add_argument(
