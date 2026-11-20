@@ -5,8 +5,13 @@
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 ![Python 3.10](https://img.shields.io/badge/python-3.10-green.svg)
 
-Standalone tool which fetches upstream source repositories to Yocto Bitbake compatible source archives.
+Standalone tool which fetches upstream source repositories into Yocto BitBake-compatible source archives.
 
+## Requirements
+
+- Python 3.10+
+- `git`
+- GNU `tar` (the tool relies on `--owner`, `--group`, and `--mtime`)
 
 ## Usage
 
@@ -17,9 +22,14 @@ Standalone tool which fetches upstream source repositories to Yocto Bitbake comp
 $ yoctofetcher https://github.com/jhnc-oss/yocto-fetcher.git
 ```
 
+## Supported URLs
+
+Repository URLs such as `https://…` and `ssh://…` are supported. `git://`
+and BitBake's `gitsm://` URLs are rewritten to `https://` before cloning.
+
 ## Setup
 
-Installation and update of this package using a Python package manager is recommended (ie. [pip](https://pip.pypa.io/en/stable/), [pipx](https://pipx.pypa.io/stable/)).
+Installing or updating this package with a Python package manager is recommended (e.g. [pip](https://pip.pypa.io/en/stable/), [pipx](https://pipx.pypa.io/stable/)).
 Please refer to the package manager documentation for detailed instructions.
 
 **Remote installation:**
@@ -31,11 +41,12 @@ pip install git+https://github.com/jhnc-oss/yocto-fetcher.git
 # pipx
 pipx install git+https://github.com/jhnc-oss/yocto-fetcher.git
 ```
-Append `@<Tag>` to install a specific [release](https://github.com/jhnc-oss/yocto-fetcher/releases) (ie. `…/yocto-fetcher.git@v0.0.8`).
+
+Append `@<Tag>` to the URL to install a specific [release](https://github.com/jhnc-oss/yocto-fetcher/releases) (e.g. `…/yocto-fetcher.git@vX.Y.Z`).
 
 **Local installation:**
 
-Clone this repository and run install in it:
+Clone this repository and install from it:
 
 ```bash
 # pip
