@@ -23,7 +23,23 @@
 import os
 import re
 import subprocess
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
+
+
+def _gitsrcname(repo_url: str) -> str:
+    url = urlparse(repo_url)
+    host = url.netloc.rsplit("@", 1)[-1].replace(":", ".")
+    path = (
+        unquote(url.path)
+        .replace("/", ".")
+        .replace("*", ".")
+        .replace(" ", "_")
+        .replace("(", "_")
+        .replace(")", "_")
+    )
+    gitsrcname = f"{host}{path}"
+    gitsrcname = gitsrcname.removeprefix(".")
+    return gitsrcname
 
 
 class GitFetcher:
@@ -37,13 +53,7 @@ class GitFetcher:
         if not self.project_name:
             raise ValueError(f"Invalid url: {repo_url}")
 
-        path_escaped = (
-            url_path.replace("/", ".")
-            .replace("*", ".")
-            .replace(":", ".")
-            .replace(" ", "_")
-        )
-        self.dest_filename = f"git2_{url.netloc}{path_escaped}.tar.gz"
+        self.dest_filename = f"git2_{_gitsrcname(self.repo_url)}.tar.gz"
 
     def fetch(self) -> None:
         subprocess.check_call(

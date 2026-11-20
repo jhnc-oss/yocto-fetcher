@@ -62,15 +62,96 @@ class TestGitFetcher(unittest.TestCase):
             GitFetcher("https://gitrepo.org/xyz/proj0.git", MagicMock()).dest_filename,
         )
         self.assertEqual(
-            "git2_gitrepo.org.xyz.proj0.git.tar.gz",
-            GitFetcher("https://gitrepo.org/xyz/proj0.git/", MagicMock()).dest_filename,
+            "git2_gitrepo.org.xyz.proj_with_slash_end.git..tar.gz",
+            GitFetcher(
+                "https://gitrepo.org/xyz/proj_with_slash_end.git/", MagicMock()
+            ).dest_filename,
         )
         self.assertEqual(
-            "git2_gitrepo.org.x.y_z.p_r.o.j.0.git.tar.gz",
+            "git2_gitrepo.org.x:y_z.p_r.o.j.0.git.tar.gz",
             GitFetcher(
                 "https://gitrepo.org/x:y z/p r/o/j*0.git", MagicMock()
             ).dest_filename,
         )
+
+    def test_dest_file_name_matches_bitbake(self) -> None:
+        cases = [
+            (
+                "https://github.com/xyz/abcd.git",
+                "git2_github.com.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "git://github.com/xyz/abcd.git",
+                "git2_github.com.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "gitsm://github.com/xyz/abcd.git",
+                "git2_github.com.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "ssh://git@github.com/xyz/abcd.git",
+                "git2_github.com.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "ssh://git@github.com:2222/xyz/abcd.git",
+                "git2_github.com.2222.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "https://host:8443/xyz/abcd.git",
+                "git2_host.8443.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "file:///srv/git/abcd.git",
+                "git2_srv.git.abcd.git.tar.gz",
+            ),
+            (
+                "https://host/a(b)/c.git",
+                "git2_host.a_b_.c.git.tar.gz",
+            ),
+            (
+                "https://host/a:b/c.git",
+                "git2_host.a:b.c.git.tar.gz",
+            ),
+            (
+                "https://host/xyz%20abcd/repo.git",
+                "git2_host.xyz_abcd.repo.git.tar.gz",
+            ),
+            (
+                "https://user:pass@host/a/b.git",
+                "git2_host.a.b.git.tar.gz",
+            ),
+            (
+                "https://host/a/b/",
+                "git2_host.a.b..tar.gz",
+            ),
+            (
+                "https://host/a/b.git?ref=main",
+                "git2_host.a.b.git.tar.gz",
+            ),
+            (
+                "ssh://user@host:2222/xyz/abcd.git",
+                "git2_host.2222.xyz.abcd.git.tar.gz",
+            ),
+            (
+                "https://host/star%2Arepo.git",
+                "git2_host.star.repo.git.tar.gz",
+            ),
+            (
+                "https://host/a+b/c.git",
+                "git2_host.a+b.c.git.tar.gz",
+            ),
+            (
+                "https://host/a/b.git#main",
+                "git2_host.a.b.git.tar.gz",
+            ),
+        ]
+
+        for url, expected in cases:
+            with self.subTest(url=url, expected=expected):
+                self.assertEqual(
+                    expected,
+                    GitFetcher(url, MagicMock()).dest_filename,
+                )
 
     @patch("subprocess.check_call", autospec=True)
     def test_fetch_clones_to_path(self, mock_call) -> None:
